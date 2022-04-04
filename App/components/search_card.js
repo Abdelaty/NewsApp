@@ -1,9 +1,7 @@
 /* eslint-disable prettier/prettier */
 import * as React from 'react';
 import { Text, Image, StyleSheet, View } from 'react-native';
-export function SearchCard(item) {
-    console.log('item');
-    console.log(item);
+export function NewsCard(item) {
     const styles = StyleSheet.create({
         container: {
             flexDirection: 'row',

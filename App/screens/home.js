@@ -1,12 +1,14 @@
 /* eslint-disable prettier/prettier */
 
 import * as React from 'react';
-import { View, ActivityIndicator, FlatList } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import { Component } from 'react/cjs/react.production.min';
 import { fetchNews } from '../services/news/news_api';
 // import { bindActionCreators } from 'redux';
 // import { connect } from 'react-redux';
-import { SearchCard } from '../components/search_card';
+import { SearchBar } from '../components/search_bar';
+import { List } from '../components/news_list';
+
 
 export class NewsScreen extends Component {
     constructor(props) {
@@ -14,6 +16,8 @@ export class NewsScreen extends Component {
         this.state = {
             data: [],
             isLoading: true,
+            searchPhrase: '',
+            clicked: false,
         };
     }
     componentDidMount() {
@@ -32,15 +36,22 @@ export class NewsScreen extends Component {
             return (
                 <View style={{ flex: 1, padding: 12, backgroundColor: '#FFFFFF' }}>
                     {isLoading ? <ActivityIndicator /> : (
-                        <FlatList
-                            onRefresh={() => this.onRefresh()}
-                            refreshing={this.state.isLoading}
-                            scrollEnabled={true}
-                            data={data.data}
-                            renderItem={({ item }) => (
-                                SearchCard(item)
-                            )}
-                        />
+                        <>
+                            <SearchBar
+                                searchPhrase={this.searchPhrase}
+                                setSearchPhrase={this.setSearchPhrase}
+                                clicked={this.state.clicked}
+                                setClicked={() => this.setClicked}
+                            />
+                            <List
+                                onRefresh={() => this.onRefresh}
+                                refreshing={this.state.isLoading}
+                                scrollEnabled={true}
+                                data={data.data}
+                                setClicked={() => this.setClicked}
+                                searchPhrase={this.state.searchPhrase}
+                            />
+                        </>
                     )
                     }
                 </View>
@@ -48,10 +59,17 @@ export class NewsScreen extends Component {
         }
 
     }
-    onRefresh() {
+    onRefresh = () => {
         this.setState({ isLoading: true }, () => { fetchNews().then(response => this.setState({ data: response, isLoading: false })); });
     }
+    setSearchPhrase = (searchPharse) => {
+        this.setState({ searchPhrase: searchPharse });
+    }
+    setClicked = () => {
+        this.setState({ clicked: false });
+    }
 }
+
 // function mapStateToProps(state) {
 //     return {
 //         news: state.news,
