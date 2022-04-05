@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import * as React from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Text } from 'react-native';
 import { Component } from 'react/cjs/react.production.min';
 import { fetchNews } from '../services/news/news_api';
 // import { bindActionCreators } from 'redux';
@@ -9,6 +9,7 @@ import { fetchNews } from '../services/news/news_api';
 import { SearchBar } from '../components/search_bar';
 import { List } from '../components/news_list';
 
+import { AppConsumer } from '../app_context_provider';
 
 export class NewsScreen extends Component {
     constructor(props) {
@@ -25,6 +26,7 @@ export class NewsScreen extends Component {
     }
 
     render() {
+
         const { data, isLoading } = this.state;
         if (isLoading) {
             return (
@@ -34,27 +36,31 @@ export class NewsScreen extends Component {
             );
         } else {
             return (
-                <View style={{ flex: 1, padding: 12, backgroundColor: '#FFFFFF' }}>
-                    {isLoading ? <ActivityIndicator /> : (
-                        <>
-                            <SearchBar
-                                searchPhrase={this.searchPhrase}
-                                setSearchPhrase={this.setSearchPhrase}
-                                clicked={this.state.clicked}
-                                setClicked={() => this.setClicked}
-                            />
-                            <List
-                                onRefresh={() => this.onRefresh}
-                                refreshing={this.state.isLoading}
-                                scrollEnabled={true}
-                                data={data.data}
-                                setClicked={() => this.setClicked}
-                                searchPhrase={this.state.searchPhrase}
-                            />
-                        </>
-                    )
-                    }
-                </View>
+                <AppConsumer>
+                    {appConsumer => (
+                        <View style={{ flex: 1, padding: 12, backgroundColor: appConsumer.theme.colors.primary }}>
+                            {isLoading ? <ActivityIndicator /> : (
+                                <>
+                                    <SearchBar
+                                        searchPhrase={this.searchPhrase}
+                                        setSearchPhrase={this.setSearchPhrase}
+                                        clicked={this.state.clicked}
+                                        setClicked={this.setClicked}
+                                    />
+                                    <List
+                                        onRefresh={() => this.onRefresh}
+                                        refreshing={this.state.isLoading}
+                                        scrollEnabled={true}
+                                        data={data.data}
+                                        setClicked={this.setClicked}
+                                        searchPhrase={this.state.searchPhrase}
+                                    />
+                                </>
+                            )
+                            }
+                        </View>
+                    )}
+                </AppConsumer>
             );
         }
 
@@ -65,8 +71,8 @@ export class NewsScreen extends Component {
     setSearchPhrase = (searchPharse) => {
         this.setState({ searchPhrase: searchPharse });
     }
-    setClicked = () => {
-        this.setState({ clicked: false });
+    setClicked = (clicked) => {
+        this.setState({ clicked: clicked });
     }
 }
 
