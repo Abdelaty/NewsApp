@@ -5,8 +5,11 @@ import { StyleSheet, TextInput, View, Keyboard, Button } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { AppConsumer } from '../app_context_provider';
+import '../assets/i18n/i18n';
+import { useTranslation } from 'react-i18next';
 
 export const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }) => {
+  const { t, i18n } = useTranslation();
   return (
     <AppConsumer>
       {appConsumer => (<View style={styles.container}>
@@ -25,7 +28,7 @@ export const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }
           <TextInput
             style={[appConsumer.theme.colors.text, styles.input]}
             color={appConsumer.theme.colors.primary}
-            placeholder="Search"
+            placeholder={t('search')}
             value={searchPhrase}
             onChangeText={setSearchPhrase}
             onFocus={() => {
@@ -49,7 +52,7 @@ export const SearchBar = ({ clicked, searchPhrase, setSearchPhrase, setClicked }
         {clicked && (
           <View style={styles.cancel}>
             <Button
-              title="Cancel"
+              title={t('cancel')}
               onPress={() => {
                 Keyboard.dismiss();
                 setClicked(false);
