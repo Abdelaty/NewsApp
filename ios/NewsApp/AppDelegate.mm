@@ -56,7 +56,7 @@
   [self.window makeKeyAndVisible];
   return YES;
 }
-
+        [[RCTI18nUtil sharedInstance] allowRTL:YES];
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
