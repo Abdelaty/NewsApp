@@ -7,7 +7,6 @@ import { SafeAreaView, StatusBar, ImageBackground, ScrollView, Linking, StyleShe
 import { AppConsumer } from '../app_context_provider';
 
 export function DetailedNews({ route, navigation }) {
-    // const item = useNavigation().getParam('item');
     const { item } = route.params;
 
     console.log(item);
@@ -38,7 +37,7 @@ export function DetailedNews({ route, navigation }) {
 
                             <View>
                                 <Text style={[{ fontWeight: 'bold', fontSize: 20, marginTop: 30 }, { color: appConsumer.theme.colors.text }]}>{item.title}</Text>
-                                <Text style={{ fontSize: 16, paddingTop: 30, paddingBottom: 10  ,color:appConsumer.theme.colors.secondry,}}>{item.description}</Text>
+                                <Text style={{ fontSize: 16, paddingTop: 30, paddingBottom: 10  ,color:appConsumer.theme.colors.text}}>{item.description}</Text>
                                 <Text style={{
                                     fontSize: 15, flexWrap: 'wrap',
                                     flexDirection: 'row',
