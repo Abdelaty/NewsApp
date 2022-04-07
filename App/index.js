@@ -16,16 +16,30 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
     const { t, i18n } = useTranslation();
-
+    const linking = {
+        prefixes: ['voisNews://','NewsApp://','newsapi://'],
+        config: {
+            initialRouteName: 'Home',
+            screens: {
+              Home: {
+                path: 'home',
+              },
+              Details: {
+                path: 'Detailed News/:item',
+              }
+            }
+          }
+    };
 
     return (
         <AppContextProvider>
             <AppConsumer>
-                {appConsumer => (<NavigationContainer theme={appConsumer.theme === LightTheme ? DefaultTheme : DarkTheme}>
+                {appConsumer => (<NavigationContainer linking={linking}
+                    theme={appConsumer.theme === LightTheme ? DefaultTheme : DarkTheme}>
                     <Tab.Navigator screenOptions={({ route }) => ({
                         tabBarIcon: ({ focused, color, size }) => {
                             let iconName;
-                            if (route.name === 'home') {
+                            if (route.name === t('home')) {
                                 iconName = focused
                                     ? 'home'
                                     : 'home-outline';
@@ -37,7 +51,7 @@ export default function App() {
                         tabBarActiveTintColor: 'tomato',
                         tabBarInactiveTintColor: 'gray',
                     })}>
-                        <Tab.Screen name={'home'} options={{headerShown: false}} component={HomeStackScreen} />
+                        <Tab.Screen name={t('home')} options={{ headerShown: false }} component={HomeStackScreen} />
                         <Tab.Screen name={t('settings')} component={SettingsScreen} />
                     </Tab.Navigator>
                 </NavigationContainer>
