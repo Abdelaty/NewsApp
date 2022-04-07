@@ -8,9 +8,6 @@ import { AppConsumer } from '../app_context_provider';
 
 export function DetailedNews({ route, navigation }) {
     const { item } = route.params;
-
-    console.log(item);
-
     return (
         <AppConsumer>
             {appConsumer =>
