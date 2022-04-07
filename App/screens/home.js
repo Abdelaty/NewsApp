@@ -11,7 +11,7 @@ import { List } from '../components/news_list';
 
 import { AppConsumer } from '../app_context_provider';
 
-export class NewsScreen extends Component {
+export class HomeScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
