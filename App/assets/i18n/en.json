@@ -4,9 +4,8 @@
       "change_language":"Change Language",
       "settings":"Settings",
       "news":"News",
-      "search":"Search"
-      ,
-      "cancel": "Cancel"
-
+      "search":"Search",
+      "cancel": "Cancel",
+      "detailed_news": "Detailed News"
     }
   }
