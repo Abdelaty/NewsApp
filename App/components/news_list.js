@@ -4,21 +4,23 @@ import React from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
 import { NewsCard } from '../components/search_card';
 import { useTheme } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 // the filter
 export const List = ({ searchPhrase, setClicked, data, onRefresh, refreshing }) => {
-    const { colors } = useTheme();
+    // const { colors } = useTheme();
+    const navigation = useNavigation();
 
     const renderItem = ({ item }) => {
         if (searchPhrase === '') {
-            return NewsCard({ item, colors });
+            return NewsCard({ item,navigation });
         }
         if (
             item.title
                 .toUpperCase()
                 .includes(searchPhrase.toUpperCase().trim().replace(/\s/g, ''))
         ) {
-            return NewsCard({ item, colors });
+            return NewsCard({ item,navigation });
         }
     };
 

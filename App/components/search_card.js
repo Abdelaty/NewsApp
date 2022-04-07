@@ -1,34 +1,44 @@
 /* eslint-disable prettier/prettier */
 import * as React from 'react';
-import { Text, Image, StyleSheet, View } from 'react-native';
+import { Text, Image, StyleSheet, View, TouchableHighlight } from 'react-native';
 import { AppConsumer } from '../app_context_provider';
-export const NewsCard = ({ item }) => {
+export const NewsCard = ({ item, navigation }) => {
+
     return (
         <AppConsumer>
-            {appConsumer => (<View style={[styles.container, { backgroundColor: appConsumer.theme.colors.secondry }]}>
-                <View style={styles.textBox}>
-                    <Text style={styles.author}>
-                        {item.author}
-                    </Text>
-                    <Text style={[styles.title, { color: appConsumer.theme.colors.text }]}>
-                        {item.title}
-                    </Text>
-                </View>
+            {appConsumer =>
 
-                <Image
-                    style={styles.imgaeThumbnail}
-                    source={{
-                        uri: item.urlToImage,
-                    }}
-                />
-            </View >)
+            (<TouchableHighlight activeOpacity={10} underlayColor="#DDDDDD"
+
+                onPress={() => onCardPressed(item, navigation)}>
+                <View style={[styles.container, { backgroundColor: appConsumer.theme.colors.secondry }]}>
+                    <View style={styles.textBox}>
+                        <Text style={styles.author}>
+                            {item.author}
+                        </Text>
+                        <Text style={[styles.title, { color: appConsumer.theme.colors.text }]}>
+                            {item.title}
+                        </Text>
+                    </View>
+
+                    <Image
+                        style={styles.imgaeThumbnail}
+                        source={{
+                            uri: item.urlToImage,
+                        }}
+                    />
+                </View ></TouchableHighlight>)
             }
+
         </AppConsumer >
 
 
     );
 
 };
+export const onCardPressed = (item, navigation) => {
+    navigation.navigate('Detailed News', { item: item });
+}
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
