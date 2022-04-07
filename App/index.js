@@ -4,15 +4,16 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SettingsScreen } from '../App/screens/setting';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { NewsScreen } from '../App/screens/home';
 import { AppContextProvider, AppConsumer } from './app_context_provider';
 import { LightTheme } from '../App/styles/themes';
-import './assets/i18n/i18n';
 import { useTranslation } from 'react-i18next';
+import { HomeStackScreen } from '../App/navigation/navigation';
+import './assets/i18n/i18n';
 
 export const ThemeContext = React.createContext();
 
 const Tab = createBottomTabNavigator();
+
 export default function App() {
     const { t, i18n } = useTranslation();
 
@@ -24,7 +25,7 @@ export default function App() {
                     <Tab.Navigator screenOptions={({ route }) => ({
                         tabBarIcon: ({ focused, color, size }) => {
                             let iconName;
-                            if (route.name === t('news')) {
+                            if (route.name === 'home') {
                                 iconName = focused
                                     ? 'home'
                                     : 'home-outline';
@@ -36,7 +37,7 @@ export default function App() {
                         tabBarActiveTintColor: 'tomato',
                         tabBarInactiveTintColor: 'gray',
                     })}>
-                        <Tab.Screen name={t('news')} component={NewsScreen} />
+                        <Tab.Screen name={'home'} options={{headerShown: false}} component={HomeStackScreen} />
                         <Tab.Screen name={t('settings')} component={SettingsScreen} />
                     </Tab.Navigator>
                 </NavigationContainer>
